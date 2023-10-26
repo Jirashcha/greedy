@@ -1,6 +1,3 @@
-#Greedy Algorithm: Activity Selection (Activity n activity and room k room. Output; wants all events to be held with minimal room)
-#Jirashcha Wanggum 1640702609 CS441 sec. 327E
-
 def ActivitySelection(startList,finishList,roomList,actList):
     result = []
     for i in range(len(startList,-1):
@@ -14,15 +11,12 @@ def ActivitySelection(startList,finishList,roomList,actList):
 act = int(input("Enter number of activities: "))
 room = int(input("Enter number of rooms: "))
 actList = []
-startList = []
-finishList = []
 roomList = []
-roomNum = []
 
-if room >= 1:
+if room and act >= 1:
     for i in range(room):
-        roomNum.append(i+1)
-        roomList.append([])
+        r = {"room":i+1 []}
+        roomList.append(r)
     
     for i in range(act):
         print("Enter start and finish time for activity", i+1, ":")
@@ -31,7 +25,7 @@ if room >= 1:
         if start >= finish:
             print("Invalid input. Start time must be less than finish time.")
             exit()
-        activity = {"activity":i + 1, "start":startActivity, "end":endActicity}
+        activity = {"activity":i + 1, "start":startActivity, "finish":endActicity}
         actList.append(activity)
 
     #sort finish time
@@ -62,35 +56,3 @@ if room >= 1:
                 
 else:
     print("No activity can be held.")
-    exit()
-
-
-
-
-if (act and room != 0):
-	for i in range(act):
-		print("Activity: ", i + 1)
-		startActivity = int(input("Enter startActivity: "))
-		endActicity = int(input("Enter endActicity: "))
-		activity = {"room":i + 1, "start":startActivity, "end":endActicity}
-		activityList.append(activity)
-	for i in range(room):
-		room = {"activityBooking": []}
-		roomList.append(room)
-	for i in range(len(activityList)):
-		for x in range(len(roomList)):
-			if (len(roomList[x]["activityBooking"]) == 0):
-				try:
-					if activityList[i]["start"] == 1 :
-						roomList[x]["activityBooking"].append(activityList[i])
-						if len(activityList) != 1:
-							activityList.pop(i)
-				except:
-					pass
-	for i in range(len(activityList)):
-		for x in range(len(roomList)):
-			for y in range(len(roomList[x]["activityBooking"])):
-				if (roomList[x]["activityBooking"][y]["end"] == activityList[i]["start"]):
-					print(roomList[x]["activityBooking"])
-					print(activityList[i])
-    
