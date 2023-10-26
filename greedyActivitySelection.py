@@ -1,8 +1,11 @@
+#Greedy Algorithm: Activity Selection (Activity n activity and room k room. Output; wants all events to be held with minimal room)
+
 act = int(input("Enter number of activities: "))
 room = int(input("Enter number of rooms: "))
 actList = []
 roomList = []
 countActSelected = 0
+countRoomSelected = 0
 
 if room and act >= 1:
     for i in range(room):
@@ -31,6 +34,7 @@ if room and act >= 1:
             if len(roomList[j][":"]) == 0:
                 roomList[j][":"].append(actList[i])
                 countActSelected += 1
+                countRoomSelected += 1
                 break
             else:
                 last = len(roomList[j][":"]) - 1
@@ -44,13 +48,13 @@ if room and act >= 1:
         print("Not all activities can be selected.")
     else:
         print("All activities can be selected.")
-        print("The minimum number of rooms required is:", len(roomList))  
-    print("The activities selected are:")       
+        print("The minimal number of rooms possible is:", countRoomSelected)  
+    print("The activities selected in each room are:")       
     for i in range(len(roomList)):
         if len(roomList[i][":"]) != 0:
             print("Room", roomList[i]["room"], " held activity:", end=" ")
             for j in range(len(roomList[i][":"])):
-                print(roomList[i][":"][j]["activity"], end=", ")
+                print(roomList[i][":"][j]["activity"], end=" ")
             print()
         else:
             break
