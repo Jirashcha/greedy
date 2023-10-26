@@ -1,23 +1,14 @@
-def ActivitySelection(startList,finishList,roomList,actList):
-    result = []
-    for i in range(len(startList,-1):
-        if startList[i+1] == finishList[i]:
-            result.append(actList[i])
-            startList.pop(i)
-            finishList.pop(i)
-            actList.pop(i)
-    return result
-
 act = int(input("Enter number of activities: "))
 room = int(input("Enter number of rooms: "))
 actList = []
 roomList = []
+countActSelected = 0
 
 if room and act >= 1:
     for i in range(room):
-        r = {"room":i+1 []}
+        r = {"room":i+1,":":[]}
         roomList.append(r)
-    
+
     for i in range(act):
         print("Enter start and finish time for activity", i+1, ":")
         start = int(input())
@@ -25,34 +16,45 @@ if room and act >= 1:
         if start >= finish:
             print("Invalid input. Start time must be less than finish time.")
             exit()
-        activity = {"activity":i + 1, "start":startActivity, "finish":endActicity}
+        activity = {"activity":i + 1, "start":start, "finish":finish}
         actList.append(activity)
-
-    #sort finish time
-    for i in range(act):
-        for j in range(act-i-1):
-            if finishList[j] > finishList[j+1]:
-                finishList[j], finishList[j+1] = finishList[j+1], finishList[j]
-                startList[j], startList[j+1] = startList[j+1], startList[j]
-                actList[j], actList[j+1] = actList[j+1], actList[j]
+        
+    for i in range(len(actList)):
+        for j in range(len(actList)-1):
+            if actList[j]["finish"] > actList[j+1]["finish"]:
+                temp = actList[j]
+                actList[j] = actList[j+1]
+                actList[j+1] = temp
     
-    #find room
-    for k in range(room):
-        roomList[k] = ActivitySelection(startList,finishList,roomList,actList)
+    for i in range(len(actList)):
+        for j in range(len(roomList)):
+            if len(roomList[j][":"]) == 0:
+                roomList[j][":"].append(actList[i])
+                countActSelected += 1
+                break
+            else:
+                last = len(roomList[j][":"]) - 1
+                if actList[i]["start"] >= roomList[j][":"][last]["finish"]:
+                    roomList[j][":"].append(actList[i])
+                    countActSelected += 1
+                    break
     
-    if len(actList) != 0:
-        if len(roomList) > len(actList):
-            for i in range(len(actList)):
-                roomList[i].append(actList[i])
+    print("------------------------------------")
+    if countActSelected != len(actList):
+        print("Not all activities can be selected.")
+    else:
+        print("All activities can be selected.")
+        print("The minimum number of rooms required is:", len(roomList))  
+    print("The activities selected are:")       
+    for i in range(len(roomList)):
+        if len(roomList[i][":"]) != 0:
+            print("Room", roomList[i]["room"], " held activity:", end=" ")
+            for j in range(len(roomList[i][":"])):
+                print(roomList[i][":"][j]["activity"], end=", ")
+            print()
         else:
-            print("No activity can be held.")
-            exit()
-
+            break
+    print("------------------------------------")
     
-    print("Can be held all activity.")
-    print(roomList)
-    # for i in range(len(roomList)):
-    #     print("Room",i+1, ": Activity", roomList[i])               
-                
 else:
-    print("No activity can be held.")
+    print("Invalid input. Number of rooms and activities must be greater than 0.")
