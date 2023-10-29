@@ -1,11 +1,9 @@
 #Greedy Algorithm: Activity Selection (Activity n activity and room k room. Output; wants all events to be held with minimal room)
-#Jirashcha Wanggum 1640702609 CS441 sec. 327E
 
 act = int(input("Enter number of activities: "))
 if act >= 1:
     actList = []
     roomList = []
-    countAct = 0
     k = 0
 
     for i in range(act):
@@ -25,26 +23,26 @@ if act >= 1:
                 actList[j] = actList[j+1]
                 actList[j+1] = temp
     
-    while len(actList) != countAct:
+    while len(actList) > 0:     
         r = {"room":k+1,":":[]}
-        roomList.append(r)
+        roomList.append(r)      
         for i in range(len(actList)):
             if len(roomList[k][":"]) == 0:
                 roomList[k][":"].append(actList[i])
-                countAct += 1
-                break
             else:
                 last = len(roomList[k][":"]) - 1
                 if actList[i]["start"] >= roomList[k][":"][last]["finish"]:
                     roomList[k][":"].append(actList[i])
-                    countAct += 1
+        for i in range(len(roomList[k][":"])): 
+            for j in range(len(actList)):
+                if roomList[k][":"][i]["activity"] == actList[j]["activity"]:
+                    actList.pop(j)
                     break
-        k += 1
-        
+        k += 1                
         
     print("------------------------------------")
     print("All activities can be selected.")
-    print("The minimal number of rooms possible is:", k)  
+    print("The minimal number of rooms possible is:", len(roomList))  
     print("The activities selected in each room are:")       
     for i in range(len(roomList)):
         if len(roomList[i][":"]) != 0:
